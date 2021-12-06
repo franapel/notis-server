@@ -9,6 +9,8 @@ app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
+const PORT = process.env.PORT
+
 webpush.setVapidDetails(
     'mailto:example@yourdomain.org',
     process.env.VAPID_PUBLIC_KEY,
@@ -73,5 +75,5 @@ app.get('/', (req, res) => {
 })
 
 app.listen(5000, () => {
-    console.log('Server listening on port 5000')
+    console.log('Server listening on port ' + PORT)
 })

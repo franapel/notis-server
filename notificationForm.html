@@ -1,6 +1,23 @@
 <body>
-    <form>
-        <input type='text'/>
-        <input type='submit'/>
+    <h1>Enviar notificacion</h1><br />
+    <form onsubmit='sendNotification(event.preventDefault())'>
+        <input type='text' name='id' id='id' placeholder="User ID" />
+        <input type='text' name='msg' id='msg' placeholder="Mensaje de la notificacion" />
+        <input type='submit' />
     </form>
+
 </body>
+
+<script>
+    async function sendNotification() {
+        const userId = document.querySelector('#id').value
+        const msg = document.querySelector('#msg').value
+        const payload = { userId, msg }
+        const url = 'http://localhost:5000/notification'
+        await fetch(url, {
+            method: 'POST',
+            body: JSON.stringify(payload),
+            headers: { 'Content-Type': 'application/json' }
+        })
+    }
+</script>

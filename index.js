@@ -26,6 +26,11 @@ app.post('/subscription', (req, res) => {
     const user = findUser(userId)
     if (user) {
         user.subscription = subscription
+        const payload = JSON.stringify({
+            title: 'OkBill',
+            body: 'Suscrito a las Notificaciones'
+        })
+        webpush.sendNotification(user.subscription, payload)
         res.send({ success: true })
     } else {
         res.send({ success: false })
@@ -40,7 +45,27 @@ app.get('/user/:id', (req, res) => {
     } else {
         res.send({ success: false, msg: 'Wrong ID' })
     }
+})
 
+app.post('/notification', (req, res) => {
+    const userId = req.body.userId
+    const msg = req.body.msg
+    const user = findUser(userId)
+    if (user) {
+        if (user.subscription && user.subscription.endpoint) {
+            const payload = JSON.stringify({
+                title: 'OkBill',
+                body: msg
+            })
+            webpush.sendNotification(user.subscription, payload)
+            res.send({ success: true })
+        } else {
+            console.log('usuario no suscrito')
+            res.send({ success: true })
+        }        
+    } else {
+        res.send({ success: false, msg: 'Wrong ID' })
+    }
 })
 
 app.get('/', (req, res) => {

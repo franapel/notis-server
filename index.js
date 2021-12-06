@@ -74,6 +74,6 @@ app.get('/', (req, res) => {
     res.sendFile('notificationForm.html', { root: __dirname })
 })
 
-app.listen(5000, () => {
+app.listen(PORT, () => {
     console.log('Server listening on port ' + PORT)
 })

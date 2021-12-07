@@ -1,11 +1,35 @@
 <body>
     <h1>Enviar notificacion</h1><br />
     <form onsubmit='sendNotification(event.preventDefault())'>
-        <input type='text' name='url' id='url' placeholder="Fetch URL" value='http://localhost:5000/notification' />
+
+        <label for='id'>ID del usuario receptor del mensaje:</label>
+        <br />
         <input type='text' name='id' id='id' placeholder="User ID" />
+        <br />
+        <br />
+        <label for='msg'>Mensaje de la notificación</label>
+        <br />
         <input type='text' name='msg' id='msg' placeholder="Mensaje de la notificacion" />
+        <br />
+        <br />
+        <label for='url'>Endpoint (desarrollo o produccion)</label>
+        <br />
+        <select id='url' name="url">
+            <option value='http://localhost:5000/notification'>http://localhost:5000/notification</option>
+            <option value='https://notis-server.herokuapp.com' selected>https://notis-server.herokuapp.com/notification</option>
+        </select>
+        <br />
+        <br />
         <input type='submit' />
     </form>
+
+    <br />
+    <br />
+
+    <p>Este formulario es para mandar un mensaje como notificación a algún usuario en específico
+        (ingresando el id del usuario). Para el testing existe un archivo (users.js) que emula una base de datos
+        donde se guardan dos usuarios de prueba (ids: 1 y 2)
+    </p>
 
 </body>
 
@@ -14,7 +38,7 @@
         const url = document.querySelector('#url').value
         const userId = document.querySelector('#id').value
         const msg = document.querySelector('#msg').value
-        const payload = { userId, msg }        
+        const payload = { userId, msg }
         await fetch(url, {
             method: 'POST',
             body: JSON.stringify(payload),
